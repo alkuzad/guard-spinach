@@ -20,12 +20,20 @@ module Guard
         if @options[:binstubs]
           cmd << 'bin/spinach'
         else
-          cmd << 'spinach'
+          if @options[:cmd] && !@options[:cmd].empty?
+            cmd << @options[:cmd]
+          else
+            cmd << 'spinach'
+          end
         end
         cmd << paths.join(" ")
         cmd << '-g' if @options[:generate]
         cmd << "-t #{@options[:tags].join(',')}" if @options[:tags] && @options[:tags].any?
         cmd << '-b' if @options[:backtrace]
+        cmd << "-r #{@options[:reporter]}" if @options[:reporter] && !@options[:reporter].empty?
+        cmd << "-f #{@options[:features_path]}" if @options[:features_path] && !@options[:features_path].empty?
+        cmd << "--fail-fast" if @options[:fail_fast]
+        cmd << "-c #{@options[:config_path]}" if @options[:config_path] && !@options[:config_path].empty?
         cmd.join(" ")
       end
 
