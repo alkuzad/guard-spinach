@@ -20,7 +20,7 @@ module Guard
         if @options[:binstubs]
           cmd << 'bin/spinach'
         else
-          if @options[:cmd] && @options[:cmd].present?
+          if @options[:cmd] && !@options[:cmd].empty?
             cmd << @options[:cmd]
           else
             cmd << 'spinach'
